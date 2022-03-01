@@ -9,7 +9,7 @@ namespace SpaceInvader
         public static (int x, int y) Size = (9, 3);
         public (int x, int y) Location;
         public int StepOnPath;
-        public List<Bullet> Bullets = new();
+        public List<Bullet> Bullets = new List<Bullet>();
 
         public Invader(int x_pos, int y_pos)
         {

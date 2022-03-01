@@ -8,7 +8,7 @@ namespace SpaceInvader
         string[] Shape;
         public (int x,int y) Location;
         public static (int x, int y) Size = (13, 5);
-        public List<Bullet> Bullets = new();
+        public List<Bullet> Bullets = new List<Bullet>();
         public int Speed;
 
 

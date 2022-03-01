@@ -9,7 +9,7 @@ namespace SpaceInvader
     {
         static void Main()
         {
-            Game game = new(new Box(120, 50), new DefenderShip(60, 45, 3), new List<Invader>());
+            Game game = new Game(new Box(120, 50), new DefenderShip(60, 45, 3), new List<Invader>());
 
             game.Invaders.Add(new Invader(10, 10));
 
