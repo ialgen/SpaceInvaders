@@ -10,19 +10,18 @@ namespace SpaceInvader
         public DefenderShip DefenderShip;
         public List<Invader> Invaders;
         public (int x, int y)[] InvadersPath;
-        public double Seconds;
         public uint DifficultySpeed;
+        public DateTime StartTime;
+        public double ClockTime;
 
-        public double passage;
-        public double passage2;
 
-        public Game(Box screen, DefenderShip defenderShip, List<Invader> invaders)
+        public Game(Box screen, DefenderShip defenderShip, List<Invader> invaders, DateTime startTime)
         {
             Screen = screen;
             DefenderShip = defenderShip;
             Invaders = invaders;
-            Seconds = 0;
             InvadersPath = InitPath(screen);
+            StartTime = startTime;
         }
 
         public static void UpdateBullets(DefenderShip defenderShip)
@@ -39,17 +38,14 @@ namespace SpaceInvader
 
         public void UpdateInvaders()
         {
-            passage = Math.Abs(Seconds % 1);
-            if (Math.Abs(Seconds % 1) < 0.1)
+            if (Math.Abs(ClockTime % 1) < 0.1)
             {
-                
                 UpdateInvadersLocations();
             }
             
             BulletInvaderCollisions();
 
-            passage2 = Math.Abs(Seconds % 2);
-            if (Math.Abs(Seconds % 2) < 0.1)
+            if (Math.Abs(ClockTime % 2) < 0.1)
             {
                 Invaders.Add(new Invader(InvadersPath[0].x, InvadersPath[0].y));
             }
@@ -91,8 +87,8 @@ namespace SpaceInvader
             {
                 if (destroyedInvaders.Contains(index))
                 {
+                    Invaders[index].AnimateDeath();
                     Invaders.RemoveAt(index);
-                    //continue;
                 }
                 index++;
             }
@@ -102,7 +98,6 @@ namespace SpaceInvader
                 if (destroyedBullets.Contains(index))
                 {
                     DefenderShip.Bullets.RemoveAt(index);
-                    //continue;
                 }
                 index++;
             }

@@ -9,9 +9,7 @@ namespace SpaceInvader
     {
         static void Main()
         {
-            Game game = new Game(new Box(120, 50), new DefenderShip(60, 45, 3), new List<Invader>());
-
-            game.Invaders.Add(new Invader(10, 10));
+            Game game = new Game(new Box(120, 20), new DefenderShip(60, 15, 3), new List<Invader>(), DateTime.Now);
 
             while (true)
             {
@@ -57,14 +55,9 @@ namespace SpaceInvader
                 game.Screen.Draw();
 
                 Console.SetCursorPosition(122, 0);
-                Console.Write(Math.Round(game.Seconds, 3));
+                Console.Write(Math.Round(game.ClockTime, 3));
 
-                Console.SetCursorPosition(122, 2);
-                Console.Write(game.passage);
-                Console.SetCursorPosition(122, 4);
-                Console.Write(game.passage2);
-
-                game.Seconds += 0.1;
+                game.ClockTime = (DateTime.Now - game.StartTime).TotalSeconds;
                 Thread.Sleep(100);
             }
         }

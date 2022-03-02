@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace SpaceInvader
 {
@@ -50,6 +51,20 @@ namespace SpaceInvader
         public void Move()
         {
             StepOnPath += 1;
+        }
+
+        public void AnimateDeath()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            int cpt = 0;
+            foreach (string Stage in Shape)
+            {
+                Console.SetCursorPosition(Location.x, Location.y + cpt);
+                Console.Write(Stage);
+                cpt++;
+            }
+            Thread.Sleep(10);
+            Console.ForegroundColor = ConsoleColor.Black;
         }
     }
 }
