@@ -10,7 +10,7 @@ namespace SpaceInvader
         static void Main()
         {
 
-            HomePage homepage =new HomePage();
+            HomePage homepage = new HomePage();
             (double, int) Results = (0, 0);
             (bool, int) Game_Data = homepage.Launch(false, Results); 
             Console.WriteLine(Results.Item1);
