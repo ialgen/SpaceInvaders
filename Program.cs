@@ -9,15 +9,14 @@ namespace SpaceInvader
     {
         static void Main()
         {
-
             HomePage homepage = new HomePage();
+            int Size_x = 90;
             (double, int) Results = (0, 0);
             (bool, int) Game_Data = homepage.Launch(false, Results); 
-            Console.WriteLine(Results.Item1);
 
             while (true)
             {
-                Game game = new Game(new Box(0,0, 90, 20), new DefenderShip(45, 15, 3), new List<Invader>(), DateTime.Now);
+                Game game = new Game(new Box(0,0, Size_x, 20), new DefenderShip(45, 15, 3), new List<Invader>(), DateTime.Now);
             
                 game.Screen.Draw();
             
@@ -54,11 +53,13 @@ namespace SpaceInvader
                     Game.UpdateBullets(game.DefenderShip);
 
                     game.Test_Invader_winning_position();
+
                     if (game.EndGame == true)
                     {
                         Results = (game.ClockTime, game.Score);
                         break;
-                    } else
+                    } 
+                    else
                     {
                         game.UpdateInvaders();
 
@@ -73,14 +74,17 @@ namespace SpaceInvader
                         game.DefenderShip.Draw();
                         game.Screen.Draw();
 
-                        Console.SetCursorPosition(92, 0);
+                        Console.SetCursorPosition(Size_x + 2, 0);
                         Console.Write(Math.Round(game.ClockTime, 3));
 
                         game.ClockTime = (DateTime.Now - game.StartTime).TotalSeconds;
                         Thread.Sleep(100);
                     }
                 }
+
+                Console.WriteLine(game.ClockTime.ToString());
                 Game_Data = homepage.Launch(true, (game.ClockTime,game.Score));
+                Console.ReadKey();
             }
         }
     }

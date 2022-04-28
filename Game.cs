@@ -43,7 +43,6 @@ namespace SpaceInvader
         {
             if (Math.Abs(ClockTime % 1) < 0.1)
             {
-                //LastInvader(screen);
                 UpdateInvadersLocations();
             }
             
@@ -69,8 +68,8 @@ namespace SpaceInvader
                     }
                 }
             }
-           
         }
+
         private void UpdateInvadersLocations()
         {
             foreach (Invader invader in Invaders)

@@ -14,7 +14,6 @@ namespace SpaceInvader
         public int Size_y = 35;
         public int X_margin = 3;
         public int Y_margin = 1;
-
         public HomePage(){}
         public HomePage(int x_left_top, int y_left_top, int size_x, int size_y)
         {
@@ -25,6 +24,7 @@ namespace SpaceInvader
         }
         public (bool,int) Launch(bool restart,(double, int)Results)
         {
+           
             this.Draw(restart, Results, true);
             bool GO = Record_Play(Console.ReadKey().Key);
             if (GO==false) Environment.Exit(0);
@@ -53,7 +53,7 @@ namespace SpaceInvader
 
             //3.
             working_on_row = working_on_row + 5;
-            Game_Title(X_margin, working_on_row);
+            Game_Title(X_margin, X_left_top, Size_x, working_on_row);
 
             //4
             working_on_row = working_on_row + 6;
@@ -112,14 +112,14 @@ namespace SpaceInvader
                 Console.WriteLine();
             }
         }
-        public static void Game_Title(int x_margin, int working_on_row)
+        public static void Game_Title(int x_margin, int x_left_top, int size_x, int working_on_row)
         {
             string[] title ={
-                "11110111101111011110111100001111001111001111001111001100001100000110011110010001",
-                "10000100101001010000100000001001001000001001001000001100001100000110010010011001",
-                "11110111101111010000111100001111001111001111001111001100001100000110010010011101",
-                "00010100001001010000100000001110001000001001001000001100001100000110010010010111",
-                "11110100001001011110111100001011001111001111001111001111001111100110011110010011"
+                "111101111011110111101111000011110111101111011110110001100001101111010001",
+                "100001001010010100001000000010010100001001010000110001100001101001011001",
+                "111101111011110100001111000011110111101111011110110001100001101001011101",
+                "000101000010010100001000000011100100001001010000110001100001101001010111",
+                "111101000010010111101111000010110111101111011110111101111101101111010011"
             };
             char[] chars;
             int[][] title_converted = new int[title.GetLength(0)][];
@@ -136,7 +136,8 @@ namespace SpaceInvader
 
             for (int i = 0; i < title_converted.GetLength(0); i++)
             {
-                Console.SetCursorPosition(x_margin, working_on_row + i);
+                int start_col = (size_x + 2 * x_left_top) / 2 - title[0].Length / 2+1;
+                Console.SetCursorPosition(start_col, working_on_row + i);
                 for (int j = 0; j < title_converted[i].GetLength(0); j++)
                 {
                     if (title_converted[i][j] == 1)
@@ -155,46 +156,59 @@ namespace SpaceInvader
 
         public static void Phase_2(int x_left_top, int size_x, int x_margin, int working_on_row)
         {
-            Console.SetCursorPosition(x_left_top + x_margin, working_on_row + 2);
-            Console.WriteLine("Which kind of fighter pilot are you ? (difficulty level)");
-            Console.SetCursorPosition(size_x / 2 - 8, working_on_row + 4);
-            Console.WriteLine("Luke Skywalker (hard / Press L)");
-            Console.SetCursorPosition(size_x / 2 - 8, working_on_row + 5);
-            Console.WriteLine("Han Solo (medium /Press H)");
-            Console.SetCursorPosition(size_x / 2 - 8, working_on_row + 6);
-            Console.WriteLine("Poe Dameron (easy / Press P)");
-            Console.SetCursorPosition(size_x / 2 - 8, working_on_row + 8);
-            Console.Write("Rebellion doesn't wait ! Your answer : ");
+            string[] txt = { "Luke Skywalker (hard / Press L)", "Han Solo (medium /Press H)", "Poe Dameron (easy / Press P)", "Rebellion doesn't wait ! YOUR ANSWER: _"};
+            string txt_first_line = "Which kind of fighter pilot are you ? (difficulty level)";
+            int start_col = (size_x) / 2 - txt_first_line.Length / 2 + 1;
+            Console.SetCursorPosition(start_col + x_left_top, working_on_row + 2);
+            Console.WriteLine(txt_first_line);
+            for (int i = 0; i < txt.GetLength(0); i++)
+            {
+                start_col = (size_x) / 2 - txt[i].Length / 2 + 1;
+                Console.SetCursorPosition(start_col + x_left_top, working_on_row + 4 + i);
+                Console.WriteLine(txt[i]);
+            }
+            Console.SetCursorPosition(start_col + x_left_top + txt[txt.GetLength(0) - 1].Length - 1, working_on_row + 3 + txt.GetLength(0));
+            
         }
         public static void Phase_1(int x_left_top, int size_x, int x_margin, int working_on_row)
         {
+            string[] txt = { "Press Enter to (re)play", "Or anything else if you don't want to play", "YOUR ANSWER : _"};
+            string txt_first_line = "READY TO SAVE THE GALAXY ?";
+            int start_col = (size_x) / 2 - txt_first_line.Length / 2 + 1; 
+            Console.SetCursorPosition(start_col+x_left_top, working_on_row + 2);
+            Console.WriteLine(txt_first_line);
+            for (int i = 0; i < txt.GetLength(0); i++)
+            {
+                start_col = (size_x) / 2 - txt[i].Length / 2 + 1;
+                Console.SetCursorPosition(start_col + x_left_top, working_on_row + 5 + i);
+                Console.WriteLine(txt[i]);
+            }
+            Console.SetCursorPosition(start_col + x_left_top+ txt[txt.GetLength(0)-1].Length-1, working_on_row + 4 + txt.GetLength(0));
 
-            Console.SetCursorPosition(size_x / 2 - 5, working_on_row + 2);
-            Console.WriteLine("READY TO SAVE THE GALAXY ? ");
-            Console.SetCursorPosition(x_left_top + 3*x_margin, working_on_row + 5);
-            Console.WriteLine("Press Enter to (re)play");
-            Console.SetCursorPosition(x_left_top + 3*x_margin, working_on_row + 6);
-            Console.WriteLine("Or anything else if you don't want to play");
-            Console.SetCursorPosition(size_x / 2 - 3, working_on_row + 8);
-            Console.Write("Your answer :  ");
         }
         public static void EndGame_Announce((double, int) Results, int x_left_top, int size_x, int x_margin, int working_on_row)
         {
+            string[] txt_Results = { "Your score is : "+ Results.Item2.ToString(), "You survive against Empire during : " + Results.Item1.ToString() + " seconds"};
+            string[] txt_replay = { "Press Enter to (re)play", "Or anything else if you don't want to play", "YOUR ANSWER : _" };
+            string txt_first_line = "It's AN ENDGAME !";
+            int start_col = (size_x) / 2 - txt_first_line.Length / 2 + 1;
+            Console.SetCursorPosition(start_col + x_left_top, working_on_row + 2);
+            Console.Write(txt_first_line);
 
-            Console.SetCursorPosition(size_x / 2 - 3, working_on_row + 2);
-            Console.WriteLine("It's AN ENDGAME !");
-            Console.SetCursorPosition(size_x / 2, working_on_row + 4);
-            Console.WriteLine("Your score is : ",Results.Item2, " !");
-            Console.SetCursorPosition(x_left_top + x_margin, working_on_row + 5);
-            Console.WriteLine("You survive against Empire during : ", Results, " seconds"); 
-            Console.SetCursorPosition(x_left_top + 3 * x_margin, working_on_row + 7);
-            Console.WriteLine("Do you want write to try another game ?");
-            Console.SetCursorPosition(x_left_top + 3 * x_margin, working_on_row + 9);
-            Console.WriteLine("Press Enter to (re)play");
-            Console.SetCursorPosition(x_left_top + 3 * x_margin, working_on_row + 10);
-            Console.WriteLine("Or anything else if you don't want to play");
-            Console.SetCursorPosition(size_x / 2 - 3, working_on_row + 12);
-            Console.Write("Your answer :  ");
+            for (int i = 0; i < txt_Results.GetLength(0); i++)
+            {
+                start_col = (size_x) / 2 - txt_Results[i].Length / 2 + 1;
+                Console.SetCursorPosition(start_col + x_left_top, working_on_row + 4 + i);
+                Console.WriteLine(txt_Results[i]);
+            }
+            for (int i = 0; i < txt_replay.GetLength(0); i++)
+            {
+                start_col = (size_x) / 2 - txt_replay[i].Length / 2 + 1;
+                Console.SetCursorPosition(start_col + x_left_top, working_on_row + 7 + i);
+                Console.WriteLine(txt_replay[i]);
+            }
+            Console.SetCursorPosition(start_col + x_left_top + txt_replay[txt_replay.GetLength(0) - 1].Length - 1, working_on_row + 4 + txt_Results.GetLength(0) + txt_replay.GetLength(0));
+
         }
         public int Record_Speed(ConsoleKey Key)
         {
