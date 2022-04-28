@@ -58,27 +58,27 @@ namespace SpaceInvader
                     {
                         Results = (game.ClockTime, game.Score);
                         break;
-                    }
-
-                    game.UpdateInvaders();
-
-                    foreach (Bullet bullet in game.DefenderShip.Bullets)
+                    } else
                     {
-                        bullet.Draw();
-                    }
-                    foreach (Invader invader in game.Invaders)
-                    {
-                        invader.Draw();
-                    }
-                    game.DefenderShip.Draw();
-                    game.Screen.Draw();
+                        game.UpdateInvaders();
 
-                    Console.SetCursorPosition(92, 0);
-                    Console.Write(Math.Round(game.ClockTime, 3));
+                        foreach (Bullet bullet in game.DefenderShip.Bullets)
+                        {
+                            bullet.Draw();
+                        }
+                        foreach (Invader invader in game.Invaders)
+                        {
+                            invader.Draw();
+                        }
+                        game.DefenderShip.Draw();
+                        game.Screen.Draw();
 
-                    game.ClockTime = (DateTime.Now - game.StartTime).TotalSeconds;
-                    Thread.Sleep(100);
-                
+                        Console.SetCursorPosition(92, 0);
+                        Console.Write(Math.Round(game.ClockTime, 3));
+
+                        game.ClockTime = (DateTime.Now - game.StartTime).TotalSeconds;
+                        Thread.Sleep(100);
+                    }
                 }
                 Game_Data = homepage.Launch(true, (game.ClockTime,game.Score));
             }
