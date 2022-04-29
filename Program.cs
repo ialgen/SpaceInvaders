@@ -25,11 +25,13 @@ namespace SpaceInvader
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.White;
 
+                    // Deplacement du vaisseau DefenderShip.
                     if (Console.KeyAvailable)
                     {
                         var arrow = Console.ReadKey(false).Key;
                         switch (arrow)
                         {
+                            // Deplacements lateraux. Fleches directionnelles du clavier.
                             case ConsoleKey.RightArrow:
                                 if (game.DefenderShip.Location.x < game.Screen.Size_x)
                                 {
@@ -42,6 +44,7 @@ namespace SpaceInvader
                                     game.DefenderShip.MoveLeft();
                                 }
                                 break;
+                            //Tir de missile. Touche ESPACE.
                             case ConsoleKey.Spacebar:
                                 game.DefenderShip.Shoot();
                                 break;
@@ -50,8 +53,10 @@ namespace SpaceInvader
                         }
                     }
 
+                    // Actualisation des positions des elements mobiles du jeu.
                     game.Update(game.DefenderShip);
 
+                    // Affichage des positions actualisees des elements mobiles du jeu.
                     foreach (Bullet bullet in game.DefenderShip.Bullets)
                     {
                         bullet.Draw();
@@ -63,11 +68,15 @@ namespace SpaceInvader
                     game.DefenderShip.Draw();
                     game.Screen.Draw();
 
+                    // Affigage timer du jeu.
                     Console.SetCursorPosition(Size_x + 2, 0);
                     Console.Write(Math.Round(game.ClockTime, 3));
 
+                    // Calcul du temps de jeu.
                     game.ClockTime = (DateTime.Now - game.StartTime).TotalSeconds;
-                    Thread.Sleep(100);
+
+                    // Pause de l'execution du programme.
+                    Thread.Sleep(10);
                 }
 
                 Console.WriteLine(game.ClockTime.ToString());
