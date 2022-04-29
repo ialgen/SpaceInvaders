@@ -213,6 +213,7 @@ namespace SpaceInvader
 
         }
         public double RecordSpeed(ConsoleKey Key)
+        // Etabli le parametre DifficulySpeed de la prochaine instance de type Game.
         {
             switch(Key)
             {
