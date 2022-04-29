@@ -14,7 +14,9 @@ namespace SpaceInvader
         public int Size_y = 35;
         public int X_margin = 3;
         public int Y_margin = 1;
+
         public HomePage(){}
+
         public HomePage(int x_left_top, int y_left_top, int size_x, int size_y)
         {
             X_left_top = x_left_top;
@@ -22,20 +24,20 @@ namespace SpaceInvader
             Size_x = size_x;
             Size_y = size_y;
         }
-        public (bool,int) Launch(bool restart,(double, int)Results)
+
+        public (bool,double) Launch(bool restart, (double, int) Results)
         {
-           
+            Console.Clear();
             this.Draw(restart, Results, true);
-            bool GO = Record_Play(Console.ReadKey().Key);
+            bool GO = RecordPlay(Console.ReadKey().Key);
             if (GO==false) Environment.Exit(0);
             Thread.Sleep(1000);
             Console.Clear();
             this.Draw(restart, Results, false); 
-            int Speed = Record_Speed(Console.ReadKey().Key);
+            double Speed = RecordSpeed(Console.ReadKey().Key);
             Thread.Sleep(1000);
             Console.Clear();
             return (GO, Speed);
-
         }
         
         public void Draw(bool restart, (double, int) Results, bool phase_1)
@@ -188,9 +190,9 @@ namespace SpaceInvader
         }
         public static void EndGame_Announce((double, int) Results, int x_left_top, int size_x, int x_margin, int working_on_row)
         {
-            string[] txt_Results = { "Your score is : "+ Results.Item2.ToString(), "You survive against Empire during : " + Results.Item1.ToString() + " seconds"};
+            string[] txt_Results = { "Your score is : " + Results.Item2.ToString(), "You survived against the Empire during : " + Results.Item1.ToString() + " seconds"};
             string[] txt_replay = { "Press Enter to (re)play", "Or anything else if you don't want to play", "YOUR ANSWER : _" };
-            string txt_first_line = "It's AN ENDGAME !";
+            string txt_first_line = "It's an ENDGAME !";
             int start_col = (size_x) / 2 - txt_first_line.Length / 2 + 1;
             Console.SetCursorPosition(start_col + x_left_top, working_on_row + 2);
             Console.Write(txt_first_line);
@@ -210,19 +212,19 @@ namespace SpaceInvader
             Console.SetCursorPosition(start_col + x_left_top + txt_replay[txt_replay.GetLength(0) - 1].Length - 1, working_on_row + 4 + txt_Results.GetLength(0) + txt_replay.GetLength(0));
 
         }
-        public int Record_Speed(ConsoleKey Key)
+        public double RecordSpeed(ConsoleKey Key)
         {
             switch(Key)
             {
                 case ConsoleKey.L:
-                    return 3;
+                    return 0.7;
                 case ConsoleKey.H:
-                    return 2;
-                default:
                     return 1;
+                default:
+                    return 1.5;
             }
         }
-        public bool Record_Play(ConsoleKey Key)
+        public bool RecordPlay(ConsoleKey Key)
         {
             switch (Key)
             {

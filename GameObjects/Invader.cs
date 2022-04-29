@@ -32,10 +32,10 @@ namespace SpaceInvader
         public void Draw()
         {
             int cpt = 0;
-            foreach (string Stage in Shape)
+            foreach (string Row in Shape)
             {
                 Console.SetCursorPosition(Location.x, Location.y + cpt);
-                Console.Write(Stage);
+                Console.Write(Row);
                 cpt++;
             }
         }
@@ -65,6 +65,26 @@ namespace SpaceInvader
             }
             Thread.Sleep(10);
             Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void AnimatedVictory()
+        {
+             
+            ConsoleColor[] colors = { ConsoleColor.Green, ConsoleColor.White };
+
+            for (int i = 1; i< 10; i++)
+            {
+                Console.ForegroundColor = colors[i%2];
+                int cpt = 0;
+                foreach (string Stage in Shape)
+                {
+                    Console.SetCursorPosition(Location.x, Location.y + cpt);
+                    Console.Write(Stage);
+                    cpt++;
+                }
+                Thread.Sleep(50);
+                Console.ForegroundColor = colors[(i-1)%2];
+            }
         }
     }
 }

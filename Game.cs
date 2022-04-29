@@ -11,23 +11,28 @@ namespace SpaceInvader
         public List<Invader> Invaders;
         public (int x, int y)[] InvadersPath;
         public int Score = 0;
-        public uint DifficultySpeed;
+        public double DifficultySpeed;
         public DateTime StartTime;
         public double ClockTime;
-        public bool EndGame = false;
+        public double LastInvadersMoveTime;
 
-
-        public Game(Box screen, DefenderShip defenderShip, List<Invader> invaders, DateTime startTime)
+        public Game(Box screen, DefenderShip defenderShip, List<Invader> invaders, DateTime startTime, double difficultySpeed)
         {
             Screen = screen;
             DefenderShip = defenderShip;
             Invaders = invaders;
             InvadersPath = InitPath(screen);
             StartTime = startTime;
+            DifficultySpeed = difficultySpeed;
         }
-        
 
-        public static void UpdateBullets(DefenderShip defenderShip)
+        public void Update(DefenderShip defenderShip)
+        {
+            UpdateBullets(defenderShip);
+            UpdateInvaders();
+        }
+
+        private static void UpdateBullets(DefenderShip defenderShip)
         {
             for (int i = 0; i < defenderShip.Bullets.Count; i++)
             {
@@ -39,11 +44,12 @@ namespace SpaceInvader
             }
         }
 
-        public void UpdateInvaders()
+        private void UpdateInvaders()
         {
-            if (Math.Abs(ClockTime % 1) < 0.1)
+            if (Math.Abs(ClockTime - LastInvadersMoveTime) > DifficultySpeed)
             {
                 UpdateInvadersLocations();
+                LastInvadersMoveTime = ClockTime;
             }
             
             BulletInvaderCollisions();
@@ -53,20 +59,25 @@ namespace SpaceInvader
                 Invaders.Add(new Invader(InvadersPath[0].x, InvadersPath[0].y));
             }
         }
-        public void Test_Invader_winning_position()
+        public bool EndGame()
         {
-            var nPerCol = InvadersPerColumn(Screen.Size_y);
-            var nPerLine = InvadersPerLine(Screen.Size_x);
-            if (Math.Abs(ClockTime % 1) < 0.1)
+            foreach (Invader invader in Invaders)
             {
-                foreach (Invader invader in Invaders)
+                if (invader.Location.x == InvadersPath[InvadersPath.Count()-1].x & invader.Location.y == InvadersPath[InvadersPath.Count()-1].y)
                 {
-                    if ((InitPath(Screen)[nPerLine * nPerCol-1].Item1 == invader.Location.x) &(InitPath(Screen)[nPerLine * nPerCol - 1].Item2 == invader.Location.y))
-                    {
-                        EndGame = true;
-                        ClockTime = (DateTime.Now - StartTime).TotalSeconds;
-                    }
+                    ClockTime = (DateTime.Now - StartTime).TotalSeconds;
+                    InvasionAnimation();
+                    return true;
                 }
+            }
+            return false;
+        }
+
+        private void InvasionAnimation()
+        {
+            foreach (Invader invader in Invaders)
+            {
+                invader.AnimatedVictory();
             }
         }
 
@@ -89,8 +100,8 @@ namespace SpaceInvader
                 int bulletIndex = 0;
                 foreach (Bullet bullet in DefenderShip.Bullets)
                 {
-                    bool x_collision = invader.HitBox().x_min < bullet.Location.x & invader.HitBox().x_max > bullet.Location.x;
-                    bool y_collision = invader.HitBox().y_min < bullet.Location.y & invader.HitBox().y_max > bullet.Location.y;
+                    bool x_collision = invader.HitBox().x_min <= bullet.Location.x & invader.HitBox().x_max > bullet.Location.x;
+                    bool y_collision = invader.HitBox().y_min <= bullet.Location.y & invader.HitBox().y_max > bullet.Location.y;
 
                     if (x_collision & y_collision)
                     {
@@ -131,7 +142,6 @@ namespace SpaceInvader
         private int InvadersPerColumn(int boxHeight)
         {
             return (int)Math.Floor(Convert.ToDouble((boxHeight - DefenderShip.Size.y) / (Invader.Size.y + 1)));
-            //return (int)Math.Floor(Convert.ToDouble(boxHeight / (Invader.Size.y + 1)));
         }
 
         private (int, int)[] InitPath(Box screen)
