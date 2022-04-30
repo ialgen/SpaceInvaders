@@ -162,7 +162,7 @@ namespace SpaceInvader
             int cpt = 0;
             Int32[] ints;
 
-            //Convertit ces string en ...
+            //Convertit ces string en jagged arrays de type int
             foreach (string titleligne in title)
             {
                 chars = titleligne.ToCharArray();
@@ -171,7 +171,7 @@ namespace SpaceInvader
                 cpt++;
             };
 
-            //Lecture du ... et Affichage du titre 
+            //Lecture du jagged array et Affichage du titre 
             for (int i = 0; i < title_converted.GetLength(0); i++)
             {
                 int start_col = (size_x + 2 * x_left_top) / 2 - title[0].Length / 2+1;
@@ -186,8 +186,8 @@ namespace SpaceInvader
                     {
                         Console.BackgroundColor = ConsoleColor.Black;
                     }
-                    //Si l'element en position (i,j) dans ... = 1
-                    //la cellule ou est le curseur sera jaune et noir a l inverse
+                    //Si l'element en position (i,j) dans le jagged array == 1
+                    //la cellule ou est le curseur, sera jaune et noir a l inverse
                     Console.Write(" ");
                 }
             };
@@ -195,12 +195,14 @@ namespace SpaceInvader
         }
 
         public static void Phase_2(int x_left_top, int size_x, int x_margin, int working_on_row)
+        //Affichage message difficultés de jeu
         {
             string[] txt = { "Luke Skywalker (hard / Press L)", "Han Solo (medium /Press H)", "Poe Dameron (easy / Press P)", "Rebellion doesn't wait ! YOUR ANSWER: _"};
             string txt_first_line = "Which kind of fighter pilot are you ? (difficulty level)";
             int start_col = (size_x) / 2 - txt_first_line.Length / 2 + 1;
             Console.SetCursorPosition(start_col + x_left_top, working_on_row + 2);
             Console.WriteLine(txt_first_line);
+            //Parcours les differents messages et les positionnent correctement par rapport à la boxe et la taille du message
             for (int i = 0; i < txt.GetLength(0); i++)
             {
                 start_col = (size_x) / 2 - txt[i].Length / 2 + 1;
