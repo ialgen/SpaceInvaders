@@ -68,7 +68,7 @@ namespace SpaceInvader
                     game.DefenderShip.Draw();
                     game.Screen.Draw();
 
-                    // Affigage timer du jeu.
+                    // Affichage timer du jeu.
                     Console.SetCursorPosition(Size_x + 2, 0);
                     Console.Write(Math.Round(game.ClockTime, 3));
 
