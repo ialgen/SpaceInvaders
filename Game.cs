@@ -15,7 +15,9 @@ namespace SpaceInvader
         public double DifficultySpeed;          // Variable definissant la vitesse de deplacement des Invader.
         public DateTime StartTime;              // Date de lancement du jeu.
         public double ClockTime;                // Duree du jeu.
-        public double LastInvadersMoveTime;     // Date du dernier mouvement des Invader.
+        private double LastInvadersMoveTime;    // Date du dernier mouvement des Invader.
+        private double LastApparitionTime;      // Date de la dernière apparition d'un Invader.
+        private double LastBulletMoveTime;      // Date dernier actualisation position missile.
 
         public Game(Box screen, DefenderShip defenderShip, List<Invader> invaders, DateTime startTime, double difficultySpeed)
         // Constructeur de la classe
@@ -26,6 +28,9 @@ namespace SpaceInvader
             InvadersPath = InitPath(screen);
             StartTime = startTime;
             DifficultySpeed = difficultySpeed;
+            LastInvadersMoveTime = 0;
+            LastApparitionTime = 0;
+            LastBulletMoveTime = 0;
         }
 
         public void Update(DefenderShip defenderShip)
@@ -35,16 +40,20 @@ namespace SpaceInvader
             UpdateInvaders();
         }
 
-        private static void UpdateBullets(DefenderShip defenderShip)
+        private void UpdateBullets(DefenderShip defenderShip)
         // Actualisations des position des missiles.
         {
-            for (int i = 0; i < defenderShip.Bullets.Count; i++)
+            if (Math.Abs(ClockTime - LastBulletMoveTime) > 1 / (DifficultySpeed * 10))
             {
-                defenderShip.Bullets[i].MoveUp();
-                if (defenderShip.Bullets[i].Location.y < 0)
+                for (int i = 0; i < defenderShip.Bullets.Count; i++)
                 {
-                    defenderShip.Bullets.RemoveAt(i);
+                    defenderShip.Bullets[i].MoveUp();
+                    if (defenderShip.Bullets[i].Location.y < 0)
+                    {
+                        defenderShip.Bullets.RemoveAt(i);
+                    }
                 }
+                LastBulletMoveTime = ClockTime;
             }
         }
 
@@ -56,15 +65,16 @@ namespace SpaceInvader
             {
                 UpdateInvadersLocations();
                 LastInvadersMoveTime = ClockTime;
+
+                // Apparition d'un nouvel ennemi.
+                if (Math.Abs(ClockTime - LastApparitionTime) > DifficultySpeed * 2)
+                {
+                    Invaders.Add(new Invader(InvadersPath[0].x, InvadersPath[0].y));
+                    LastApparitionTime = ClockTime;
+                }
             }
             
             BulletInvaderCollisions();
-
-            // Apparition d'un nouvel ennemi.
-            if (Math.Abs(ClockTime - LastInvadersMoveTime) > DifficultySpeed*2)
-            {
-                Invaders.Add(new Invader(InvadersPath[0].x, InvadersPath[0].y));
-            }
         }
 
         private void UpdateInvadersLocations()

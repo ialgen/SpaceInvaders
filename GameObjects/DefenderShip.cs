@@ -14,7 +14,7 @@ namespace SpaceInvader
                 "/||\\ / \\ /||\\",
                 " ** ^^^^^ ** ",
             };
-        public static (int x, int y) Size = (13, 5);
+        public (int x, int y) Size = (13, 5);
         public (int x, int y) Location;
         public List<Bullet> Bullets = new List<Bullet>();
         public int Speed;

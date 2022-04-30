@@ -33,13 +33,13 @@ namespace SpaceInvader
                         {
                             // Deplacements lateraux. Fleches directionnelles du clavier.
                             case ConsoleKey.RightArrow:
-                                if (game.DefenderShip.Location.x < game.Screen.Size_x)
+                                if (game.DefenderShip.Location.x + game.DefenderShip.Size.x + 1 < game.Screen.Size_x)
                                 {
                                     game.DefenderShip.MoveRight();
                                 }
                                 break;
                             case ConsoleKey.LeftArrow:
-                                if (game.DefenderShip.Location.x > 0)
+                                if (game.DefenderShip.Location.x > 1)
                                 {
                                     game.DefenderShip.MoveLeft();
                                 }
