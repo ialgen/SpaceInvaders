@@ -87,8 +87,8 @@ namespace SpaceInvader
             }
         }
 
-        public void BulletInvaderCollisions()
-        // Detection des collisions entre Invader et Bullet.
+        private void BulletInvaderCollisions()
+        // Detection des collisions entre Invader et Bullet selon leur positions respectives.
         {
             List<int> destroyedInvaders = new List<int>();
             List<int> destroyedBullets = new List<int>();

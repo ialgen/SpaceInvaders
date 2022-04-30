@@ -197,7 +197,7 @@ namespace SpaceInvader
         public static void Phase_2(int x_left_top, int size_x, int x_margin, int working_on_row)
         //Affichage message difficultés de jeu
         {
-            string[] txt = { "Luke Skywalker (hard / Press L)", "Han Solo (medium /Press H)", "Poe Dameron (easy / Press P)", "Rebellion doesn't wait ! YOUR ANSWER: _"};
+            string[] txt = { "Luke Skywalker (hard / Press L)", "Han Solo (medium /Press H)", "Poe Dameron (easy / Press P) (default setting)", "Rebellion doesn't wait ! YOUR ANSWER: _"};
             string txt_first_line = "Which kind of fighter pilot are you ? (difficulty level)";
             int start_col = (size_x) / 2 - txt_first_line.Length / 2 + 1;
             Console.SetCursorPosition(start_col + x_left_top, working_on_row + 2);
