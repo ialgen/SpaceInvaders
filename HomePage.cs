@@ -215,7 +215,7 @@ namespace SpaceInvader
         public static void Phase_1(int x_left_top, int size_x, int x_margin, int working_on_row)
         //Affichage message initial
         {
-            string[] txt = { "Press Y to (re)play", "Or anything else if you don't want to play", "YOUR ANSWER : _"};
+            string[] txt = { "Press SPACEBAR to (re)play", "Or anything else if you don't want to play", "YOUR ANSWER : _"};
             string txt_first_line = "READY TO SAVE THE GALAXY ?";
             int start_col = (size_x) / 2 - txt_first_line.Length / 2 + 1; 
             Console.SetCursorPosition(start_col+x_left_top, working_on_row + 2);
@@ -235,7 +235,7 @@ namespace SpaceInvader
          //Affichage message de fin de manche 
          {
             string[] txt_Results = { "Your score is : " + Results.Item2.ToString(), "You survived against the Empire during : " + Results.Item1.ToString() + " seconds"};
-            string[] txt_replay = { "Press Y to (re)play", "Or anything else if you don't want to play", "YOUR ANSWER : _" };
+            string[] txt_replay = { "Press SPACEBAR to (re)play", "Or anything else if you don't want to play", "YOUR ANSWER : _" };
             string txt_first_line = "It's an ENDGAME !";
             int start_col = (size_x) / 2 - txt_first_line.Length / 2 + 1;
             Console.SetCursorPosition(start_col + x_left_top, working_on_row + 2);
@@ -275,8 +275,8 @@ namespace SpaceInvader
         {
             switch (Key)
             {
-                case ConsoleKey.Y:
-                    Console.Write("es");
+                case ConsoleKey.Spacebar:
+                    Console.Write("Yes");
                     return true;
                 default:
                     Console.Write("No");
