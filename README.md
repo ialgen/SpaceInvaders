@@ -30,7 +30,7 @@ Puis de 4 fichiers contenant les codes de 4 classes d’objets du jeu:
   - Box.cs : cadre de jeu et aussi de la page d’accueil, 
   - Bullet.cs : missiles envoyés par les vaisseaux.
 
-## Structure des classes
+## Structure des classes principales
 
 ##### `class Program`
 
