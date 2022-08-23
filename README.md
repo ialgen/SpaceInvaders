@@ -1,6 +1,4 @@
-# PROJET C# - M1 EIF
-
-Ialgen ALLAL & Bertrand GOULOUMES
+# PROJET C# - M1 EIF - Ialgen ALLAL & Bertrand GOULOUMES
 
 ## Comment jouer ?
 
@@ -14,6 +12,32 @@ Le jeu se finit lorsqu’un chasseur de l’Empire (`class Invader`) est sur le 
 
 Vous pouvez augmenter la difficulté selon le pilote sélectionné ce qui accélèrera la vitesse des chasseurs ennemis.
 
-Vous ne pouvez qu'un missile à la fois.
+Vous ne pouvez tirer qu'un missile à la fois.
 
-Il est évidemment possible de rejouer, votre score (nombre de vaisseaux abattus et temps de survie) sera affiché.
+Il est possible de rejouer, votre score (nombre de vaisseaux abattus et temps de survie) sera affiché.
+
+
+## Structure du dossier
+
+Le jeu est composé de 3 fichiers de code principaux : 
+  - Program.cs 
+  - HomePage.cs : contient la `class HomePage` qui gère l'interface entre les manches.
+  - Game.cs : contient la `class Game` qui gère une manche.
+
+Puis de 4 fichiers contenant les codes de 4 classes d’objets du jeu: 
+  - DefenderShip.cs : vaisseau contrôlé par le joueur, 
+  - Invader.cs : vaisseau ennemi, 
+  - Box.cs : cadre de jeu et aussi de la page d’accueil, 
+  - Bullet.cs : missiles envoyés par les vaisseaux.
+
+## Structure des classes
+
+##### `class Program`
+
+Contient 2 boucles `while` imbriquées. La boucle intérieure gère chaque manche individuellement en utilisant l'instance de la `class Game` nouvellement crée. La boucle extérieure permet d'effectuer lla transition entre les manches ainsi que la fin de partie.
+
+##### `class HomePage`
+Les 2 méthodes principales `Launch` et `Draw` fonctionnent de concert pour afficher à l'utilisateur les options de jeu qui lui sont possibles comme le niveau de difficulté.
+
+##### `class Game`
+Cette classe contient tous les attributs et méthodes relatif à une manche. Les méthodes principales sont les méthodes `Update` qui actualisent l'état du jeu à chaque rafraichissement par la boucle de la boucle de la `class Program`.
